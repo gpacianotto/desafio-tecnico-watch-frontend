@@ -58,7 +58,7 @@ export default function Home() {
             <Button 
               onClick={(e) => {
                 axios.post(
-                  `http://localhost:3001/auth/login`, 
+                  `${process.env.NEXT_PUBLIC_API_URL}/auth/login`, 
                   {
                     email: loginEmail,
                     password: loginPassword
@@ -67,8 +67,13 @@ export default function Home() {
                 ).then((res) => {
                   console.log("Login result", res);
 
-                  
+                  //@ts-ignore
+                  // JWT.token = res?.data?.data?.token;
 
+                  window.localStorage.setItem("token", res?.data?.data?.token);
+
+                  window.location.href = "/home";
+                  return;
                 })
                 .catch((err) => {
                   console.log("Login error", err.response.data.message);
@@ -153,7 +158,7 @@ export default function Home() {
                 }
 
                 axios.post(
-                  `http://localhost:3001/onboarding`, 
+                  `${process.env.NEXT_PUBLIC_API_URL}/onboarding`, 
                   {
                     name: registerName,
                     email: registerEmail,
