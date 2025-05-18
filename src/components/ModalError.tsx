@@ -24,7 +24,7 @@ export default function ModalError({ open, handleClose, message }: { open: boole
         <Typography color="error" id="modal-modal-title" variant="h6" component="h2">
           Erro!
         </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        <Typography style={{whiteSpace: "pre-line"}} id="modal-modal-description" sx={{ mt: 2 }}>
           {message}
         </Typography>
       </Box>

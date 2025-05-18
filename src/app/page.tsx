@@ -176,8 +176,16 @@ export default function Home() {
                 .catch((err) => {
                   console.log("Register error", err.response.data.message);
                   
-                  if(err.response.data.message) {
+                  if(typeof err.response.data.message === "string") {
                     setErrorMessage(err.response.data.message);
+                    setError(true);
+                    return;
+                  }
+
+                  if(Array.isArray(err.response.data.message)) {
+                    const message = err.response.data.message.map((item: string) => item).join("\n\n");
+
+                    setErrorMessage(message);
                     setError(true);
                     return;
                   }
