@@ -2,7 +2,7 @@
 import AccordeonList from "@/components/AccordeonList";
 import ModalError from "@/components/ModalError";
 import ModalNewMovie from "@/components/ModalNewMovie";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Pagination, Typography } from "@mui/material";
 import axios from "axios";
 import { use, useEffect, useState } from "react";
 import { text } from "stream/consumers";
@@ -38,6 +38,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const [page, setPage] = useState(1);
   const [user, setUser] = useState<User|undefined>();
+  const [movieCount, setMovieCount] = useState(0);
 
   const [modalNewMovieOpen, setModalNewMovieOpen] = useState(false);
 
@@ -55,6 +56,8 @@ export default function Home() {
       console.log(response.data)
       // @ts-ignore
       setMovies(response.data.data);
+      // @ts-ignore
+      setMovieCount(response.data.count);
     }).catch((error) => {
 
       console.log("Error", error);
@@ -113,7 +116,21 @@ export default function Home() {
       <Grid size={6}>
         <h1>Seus Filmes Favoritos</h1>
 
-        <AccordeonList handleReloading={() => {setReload(!reload)}} movies={movies}></AccordeonList>
+        <AccordeonList 
+          handleReloading={() => {setReload(!reload)}} 
+          movies={movies}
+        />
+        <Grid size={12} style={{marginBottom: 20, marginTop: 20}}>
+          <Pagination 
+            page={page}
+            count={Math.ceil(movieCount / 10)}
+            style={{margin: "auto"}}
+            onChange={(event, value) => {
+              setPage(value);
+            }}
+          />
+        </Grid>
+        
       </Grid>
       <Grid size={3} style={{textAlign: "center"}}>
         <Button variant="contained" size="large" color="success" onClick={() => {setModalNewMovieOpen(true)}}>Novo Filme</Button>

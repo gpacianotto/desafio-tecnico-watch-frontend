@@ -120,7 +120,7 @@ export default function ModalNewMovie({ open, handleClose, handleReload }: { ope
               value={userRating} 
               onChange={(e, newValue) => {setUserRating(newValue)}} 
               defaultValue={2.5} 
-              precision={0.5}
+              precision={1}
               size="large"
               name="userRating"
             />
