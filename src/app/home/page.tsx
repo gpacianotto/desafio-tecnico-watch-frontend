@@ -95,7 +95,7 @@ export default function Home() {
     <ModalError open={error} handleClose={() => {setError(false)}} message={errorMessage}/>
     <ModalNewMovie handleReload={() => {setReload(!reload)}} open={modalNewMovieOpen} handleClose={() => {setModalNewMovieOpen(false)}}/>
     <Grid container spacing={2}>
-      <Grid size={{xl: 12, sm: 3}} style={{textAlign: "center"}}>
+      <Grid size={{xl: 3, sm: 3, lg: 3, xs:12}} style={{textAlign: "center"}}>
         {/* <p>Bem Vindo Fulano de Tal!</p> */}
         
         { user &&
@@ -113,7 +113,7 @@ export default function Home() {
           LogOut
         </Button>
       </Grid>
-      <Grid size={{xl: 12, sm:6}}>
+      <Grid size={{xl: 6, sm:6, lg: 6, xs: 12}}>
         <h1>Seus Filmes Favoritos</h1>
 
         <AccordeonList 
@@ -132,7 +132,7 @@ export default function Home() {
         </Grid>
         
       </Grid>
-      <Grid size={{xl:12, sm:3}} style={{textAlign: "center"}}>
+      <Grid size={{xl:3, sm:3, lg: 3, xs: 12}} style={{textAlign: "center"}}>
         <Button variant="contained" size="large" color="success" onClick={() => {setModalNewMovieOpen(true)}}>Novo Filme</Button>
       </Grid>
 
