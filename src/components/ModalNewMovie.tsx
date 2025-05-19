@@ -26,6 +26,8 @@ export default function ModalNewMovie({ open, handleClose, handleReload }: { ope
   const [userConsiderations, setUserConsiderations] = useState("");
   const [imageUrl, setImageUrl] = useState<string|undefined>();
   const [id, setId] = useState("");
+
+  const [titleErrorMessage, setTitleErrorMessage] = useState("");
   
   return <>
     <Modal
@@ -56,10 +58,13 @@ export default function ModalNewMovie({ open, handleClose, handleReload }: { ope
               variant="outlined"
               value={title}
               onChange={(event) => {
+                setTitleErrorMessage("")
                 setTitle(event.target.value);
               }}
               fullWidth
+              error={!!titleErrorMessage}
             />
+            <Typography color="error">{titleErrorMessage}</Typography>
           </Grid>
           <Grid size={4} style={{margin: "auto"}}>
             <Button onClick={
@@ -68,6 +73,12 @@ export default function ModalNewMovie({ open, handleClose, handleReload }: { ope
                 .then((response) => {
                   console.log(response.data);
                   
+                  //@ts-ignore
+                  if(response.data.Error) {
+                    setTitleErrorMessage("Filme não encontrado!");
+                    return
+                  }
+
                   //@ts-ignore
                   setTitle(response.data.Title);
                   //@ts-ignore
@@ -174,6 +185,8 @@ export default function ModalNewMovie({ open, handleClose, handleReload }: { ope
                   handleReload();
                 }).catch((error) => {
                   console.log("Error", error);
+
+                  setTitleErrorMessage(error.response.data.message);
                 })
               }}
             >
